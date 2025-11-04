@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WeightLog extends Model
 {
     use HasFactory;
-
+    
     protected $fillable = [
         'user_id',
         'date',

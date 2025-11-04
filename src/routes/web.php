@@ -19,7 +19,7 @@ Route::get('/login', [WeightController::class, 'index'])->name('login');
 
 //dashboard
 Route::get('/weight_logs', [WeightController::class, 'show'])->name('dashboard');
-Route::post('/weight_logs/{id}', [WeightController::class, 'update'])->name('weight.update');
+Route::post('/weight_logs', [WeightController::class, 'storeWeight'])->name('');
 
 //calender
 Route::get('/weight_logs/search', [WeightController::class, 'search'])->name('weight_logs.search');
@@ -28,5 +28,8 @@ Route::get('/weight_logs/search', [WeightController::class, 'search'])->name('we
 Route::post('/weight_logs', [WeightController::class, 'storeWeight'])->name('weight.store');
 
 //detail
-Route::get('/weight_logs/{:weightLogId}', [WeightController::class, 'edit'])->name('detail');
-Route::put('/weight_logs/{id}', [WeightController::class, 'update'])->name('weight.update');
+Route::get('/weight_logs/{:weightLogId}', [WeightController::class, 'showDetail'])->name('detail');
+Route::put('/weight_logs/{:weightLogId}',  [WeightController::class, 'update'])->name('detail');
+
+//search
+Route::post('/weight_logs/search', [WeightController::class, 'search'])->name('weight_logs.search');

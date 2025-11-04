@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\WeightLog;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Models\WeightTarget;
 
 class WeightController extends Controller
 {
@@ -100,4 +101,27 @@ class WeightController extends Controller
         ]));
         return redirect()->route('dashboard');
     }
+
+    //体重ログ
+    public function logs(){
+        $logs=WeightLog::orderBy('date', 'desc')->get();
+        return view('weight.logs', compact('logs'));
+    }
+    // 目標体重
+    public function target()
+    {
+        $target = WeightTarget::first();
+        return view('weight.target', compact('target'));
+    }
+
+    //weightlogテーブル
+    public function showDashboard(){
+        $logs=WeightLog::all();
+        return view('dashboard', compact('logs'));
+    }
+    public function showDetail($id)
+{
+    $log = WeightLog::findOrFail($id);
+    return view('detail', compact('logs'));
+}
 }
