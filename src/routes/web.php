@@ -17,19 +17,21 @@ Route::post('/register/step2', [WeightController::class, 'storeStep2'])->name('r
 // Login
 Route::get('/login', [WeightController::class, 'index'])->name('login');
 
-//dashboard
+// dashboard
 Route::get('/weight_logs', [WeightController::class, 'show'])->name('dashboard');
-Route::post('/weight_logs', [WeightController::class, 'storeWeight'])->name('');
 
-//calender
-Route::get('/weight_logs/search', [WeightController::class, 'search'])->name('weight_logs.search');
-
-//mordal
+// モーダル
 Route::post('/weight_logs', [WeightController::class, 'storeWeight'])->name('weight.store');
 
-//detail
-Route::get('/weight_logs/{:weightLogId}', [WeightController::class, 'showDetail'])->name('detail');
-Route::put('/weight_logs/{:weightLogId}',  [WeightController::class, 'update'])->name('detail');
-
-//search
+// 検索
+Route::get('/weight_logs/search', [WeightController::class, 'search'])->name('weight_logs.search');
 Route::post('/weight_logs/search', [WeightController::class, 'search'])->name('weight_logs.search');
+
+// 詳細
+Route::get('/weight_logs/{weightLogId}', [WeightController::class, 'showDetail'])->name('detail');
+Route::put('/weight_logs/{weightLogId}', [WeightController::class, 'update'])->name('weight.update');
+
+//詳細　ページ遷移
+Route::get('/weight_logs/{:weightLogId}', [WeightController::class, 'showDetail'])->name('detail');
+Route::put('/weight_logs/{:weightLogId}', [WeightController::class, 'update'])->name('weight.update');
+Route::delete('/weight_logs/{:weightLogId}', [WeightController::class, 'destroy'])->name('weight.destroy');

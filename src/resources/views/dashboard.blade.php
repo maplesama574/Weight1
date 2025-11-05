@@ -34,7 +34,7 @@
 
 <!-- モーダル -->
 <div id="add-modal" class="modal" style="display:none;">
-    <form method="POST" action="{{ route('weight_logs.store') }}">
+    <form method="POST" action="{{ route('weight.store') }}">
         @csrf
         <label>日付</label>
         <input type="date" name="date" required>
@@ -75,10 +75,8 @@
     <td>{{ $weight->weight }}</td>
     <td>{{ $weight->calories }}</td>
     <td>{{ $weight->exercise_time }}</td>
-    <td>
-        <!-- data- 属性に値を持たせる -->
-        <td>
-    <a href="{{ route('weight_logs.show', ['id' => $weight->id]) }}" class="table-item__detail">✏</a>
+     <td>
+    <a href="{{ route('detail', ['weightLogId' => $weight->id]) }}" class="table-item__detail">✏</a>
 </td>
 
     </td>
@@ -99,13 +97,13 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('modal');
-    const closeBtn = document.getElementById('close-modal');
+    const modal = document.getElementById('add-modal');
+    const openBtn = document.getElementById('add-weight-btn');
+    const closeBtn = document.getElementById('close-add-modal');
 
-    document.querySelectorAll('.open-modal').forEach(button => {
-        button.addEventListener('click', function() {
-            modal.style.display = 'block'; 
-        });
+    openBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'block';
     });
 
     closeBtn.addEventListener('click', function() {

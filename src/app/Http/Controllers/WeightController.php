@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\WeightLog;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\WeightTarget;
+use App\Models\WeightLog;
 
 class WeightController extends Controller
 {
@@ -52,20 +52,26 @@ class WeightController extends Controller
     }
 
     // モーダルで新規体重を追加
-    public function storeWeight(Request $request) {
-        $validated = $request->validate([
-            'date' => 'required|date',
-            'weight' => 'required|numeric',
-            'calories' => 'nullable|integer',
-            'exercise_time' => 'nullable',
-            'exercise_content' => 'nullable|string',
-        ]);
+    public function storeWeight(Request $request)
+{
+    $validated = $request->validate([
+        'date' => 'required|date',
+        'weight' => 'required|numeric',
+        'calories' => 'nullable|integer',
+        'exercise_time' => 'nullable',
+        'exercise_content' => 'nullable|string',
+    ]);
 
-        $validated['user_id'] = auth()->id();
-        $weightLog = WeightLog::create($validated);
+    $validated['user_id'] = auth()->id();
 
-        return response()->json($weightLog);
-    }
+    $log = WeightLog::create($validated);
+
+    return response()->json([
+        'success' => true,
+        'log' => $log,
+    ]);
+}
+
 
     // 検索
     public function search(Request $request) {
@@ -85,10 +91,13 @@ class WeightController extends Controller
     }
 
     // ページネーション
-    public function show() {
+    public function show()
+    {
         $weights = WeightLog::paginate(8);
-        return view('dashboard', compact('weights'));
+        return view('dashboard', compact('weights')); 
     }
+
+
 
     // 更新
     public function update(Request $request, $id) {
@@ -119,9 +128,10 @@ class WeightController extends Controller
         $logs=WeightLog::all();
         return view('dashboard', compact('logs'));
     }
-    public function showDetail($id)
+    public function showDetail($Weightid)
 {
-    $log = WeightLog::findOrFail($id);
-    return view('detail', compact('logs'));
+    $log = WeightLog::findOrFail($Weightid);
+    return view('detail', compact('log'));
+
 }
 }
